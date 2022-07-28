@@ -6,6 +6,8 @@ import cors from 'cors';
 import 'dotenv/config.js';
 import createError from 'http-errors';
 import methodOverride from 'method-override';
+import { router as profileRouter } from './routes/profiles.js'
+import { router as authRouter } from "./routes/auth.js"
 
 
 
@@ -38,6 +40,11 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
+// Mounted Routes
+
+app.use('/auth', authRouter)
+app.use('/profiles', profileRouter)
+
 app.use(function (req, res, next) {
   res.status(404).json({ err: "Not Found" })
 })
@@ -49,7 +56,3 @@ app.use(function (err, req, res, next) {
 export { app }
 
 
-
-// Configure the app (app.set)
-
-// Middleware
