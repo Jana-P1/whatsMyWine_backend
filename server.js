@@ -4,6 +4,12 @@ import logger from 'morgan'
 import cors from 'cors'
 import 'dotenv/config.js'
 
+
+// Connect to MongoDB through mongoose
+import('./config/database.js')
+
+// Load Passport
+
 // Create Express App
 import('./config/database.js')
 const app = express()
