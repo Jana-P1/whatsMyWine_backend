@@ -24,7 +24,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 
-/** Session Middlewar */
+/** Session Middleware */
 app.use(
   session({
     secret: process.env.SESSION_SECRET,

@@ -42,3 +42,15 @@ passport.use(
     })
   }
 )
+passport.serializeUser(function (err, done) {
+  done (null, user.id)
+})
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id)
+  .populate('userProfile', 'name avatar')
+  .exec(function(err, user) {
+    done(err, user)
+  })
+})
+
