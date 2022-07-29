@@ -8,6 +8,7 @@ import createError from 'http-errors';
 import methodOverride from 'method-override';
 import { router as profileRouter } from './routes/profiles.js'
 import { router as authRouter } from "./routes/auth.js"
+import { passUserToView } from "./middleware/middleware.js"
 
 
 
@@ -40,6 +41,8 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
+// Custom Middleware
+app.use(passUserToView)
 // Mounted Routes
 
 app.use('/auth', authRouter)
