@@ -5,7 +5,7 @@ import { Profile } from '../models/profile.js'
 
 
 passport.use(
-  new GoogleStrategy {
+  new GoogleStrategy ({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK
@@ -41,9 +41,9 @@ passport.use(
       }
     })
   }
-)
+))
 passport.serializeUser(function (err, done) {
-  done (null, user.id)
+  done (null, User.id)
 })
 
 passport.deserializeUser(function(id, done) {

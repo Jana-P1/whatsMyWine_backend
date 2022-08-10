@@ -16,6 +16,7 @@ import { passUserToView } from "./middleware/middleware.js"
 import('./config/database.js')
 
 // Load Passport
+import('./config/passport.js')
 
 // Create Express App
 import('./config/database.js')
