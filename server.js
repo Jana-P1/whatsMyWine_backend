@@ -19,13 +19,11 @@ import('./config/database.js')
 import('./config/passport.js')
 
 // Create Express App
-import('./config/database.js')
 const app = express()
 
 app.use(cors())
 app.use(logger('dev'))
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
 
 
 /** Session Middleware */
@@ -34,9 +32,6 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      sameSite: 'lax',
-    }
   })
 )
 app.use(passport.initialize())

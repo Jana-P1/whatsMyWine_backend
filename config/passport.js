@@ -3,14 +3,26 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from '../models/user.js';
 import { Profile } from '../models/profile.js'
 
+passport.serializeUser(function (err, done) {
+  done (null, User.id)
+})
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id)
+  .populate('userProfile', 'name avatar')
+  .exec(function(err, user) {
+    done(err, user)
+  })
+})
 
 passport.use(
   new GoogleStrategy ({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+    callbackURL: process.env.GOOGLE_CALLBACK,
+    passReqToCallBack: true,
   },
-  function(accessTocken, refreshToken, profile, done) {
+  function(request, accessToken, refreshToken, profile, done) {
     User.findOne({ googleId: profile.id }, function (err, user) {
       if (err) return done(err)
       if (user) {
@@ -42,15 +54,4 @@ passport.use(
     })
   }
 ))
-passport.serializeUser(function (err, done) {
-  done (null, User.id)
-})
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id)
-  .populate('userProfile', 'name avatar')
-  .exec(function(err, user) {
-    done(err, user)
-  })
-})
 
