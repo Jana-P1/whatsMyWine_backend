@@ -9,6 +9,7 @@ import methodOverride from 'method-override';
 import { router as profileRouter } from './routes/profiles.js'
 import { router as authRouter } from "./routes/auth.js"
 import { passUserToView } from "./middleware/middleware.js"
+import cookieSession from 'cookie-session';
 
 
 
@@ -21,7 +22,11 @@ import('./config/passport.js')
 // Create Express App
 const app = express()
 
-app.use(cors())
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: "GET, POST, DELETE, PUT",
+  credentials: true,
+}))
 app.use(logger('dev'))
 app.use(express.json())
 
@@ -31,7 +36,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: false
   })
 )
 app.use(passport.initialize())

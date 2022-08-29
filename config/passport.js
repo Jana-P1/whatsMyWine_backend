@@ -3,17 +3,6 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from '../models/user.js';
 import { Profile } from '../models/profile.js'
 
-passport.serializeUser(function (err, done) {
-  done (null, User.id)
-})
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id)
-  .populate('userProfile', 'name avatar')
-  .exec(function(err, user) {
-    done(err, user)
-  })
-})
 
 passport.use(
   new GoogleStrategy ({
@@ -55,3 +44,14 @@ passport.use(
   }
 ))
 
+passport.serializeUser(function (err, done) {
+  done (null, User.id)
+})
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id)
+  .populate('userProfile', 'name avatar')
+  .exec(function(err, user) {
+    done(err, user)
+  })
+})
