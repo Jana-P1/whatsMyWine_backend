@@ -6,7 +6,7 @@ const router = Router()
 // Successful login
 router.get("/login/success", (req, res) => {
   if(req.user) {
-    res.status.apply(200).json({
+    res.status(200).json({
       success: true,
       message: "successful",
       user: req.user
@@ -21,10 +21,11 @@ router.get("/login/failed", (req, res) => {
   })
 })
 // Google Login route
-router.get('/google', passport.authenticate(
-  'google',
-  { scope: ['profile', 'email'] }
-))
+router.post("/auth/one-tap/callback", passport.authenticate("google-one-tap", { failureRedirect: '/login' }),
+  function(req, res, next) {
+    res.redirect(process.env.CLIENT_URL)
+  }
+)
 // Google OAuth callback route
 router.get(
   '/google/callback',

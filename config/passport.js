@@ -1,17 +1,16 @@
 import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { GoogleOneTapStrategy } from 'passport-google-one-tap';
 import { User } from '../models/user.js';
 import { Profile } from '../models/profile.js'
 
 
 passport.use(
-  new GoogleStrategy ({
+  new GoogleOneTapStrategy ({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK,
-    passReqToCallBack: true,
+    verifyCsrfToken: false,
   },
-  function(request, accessToken, refreshToken, profile, done) {
+  function(profile, done) {
     User.findOne({ googleId: profile.id }, function (err, user) {
       if (err) return done(err)
       if (user) {

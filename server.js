@@ -22,11 +22,7 @@ import('./config/passport.js')
 // Create Express App
 const app = express()
 
-app.use(cors({
-  origin: "http://localhost:3000",
-  methods: "GET, POST, DELETE, PUT",
-  credentials: true,
-}))
+app.use(cors())
 app.use(logger('dev'))
 app.use(express.json())
 
