@@ -20,6 +20,6 @@
     "morgan": "~1.9.1",
     "node-fetch": "^3.2.9",
     "nodemon": "^2.0.19",
-    "passport-google-one-tap": "^1.0.0"
+    "passport-google-oidc": "^0.1.0"
   }
 }

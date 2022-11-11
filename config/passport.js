@@ -1,22 +1,22 @@
 import passport from 'passport';
-import { GoogleOneTapStrategy } from 'passport-google-one-tap';
+import { GoogleStrategy } from 'passport-google-oidc';
 import { User } from '../models/user.js';
 import { Profile } from '../models/profile.js'
 
 
 passport.use(
-  new GoogleOneTapStrategy ({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_SECRET,
-    verifyCsrfToken: false,
+  new GoogleStrategy ({
+    clientID: process.env['GOOGLE_CLIENT_ID'],
+    clientSecret: process.env['GOOGLE_SECRET'],
+    callbackUrl: 'http://localhost:3001/oauth2/redirect'
   },
-  function(profile, done) {
+  function verify(issuer, profile, cb) {
     User.findOne({ googleId: profile.id }, function (err, user) {
       if (err) return done(err)
       if (user) {
         return done(null, user)
       } else {
-        // new profile created via Google OAuth
+        // new profile created via Google
         const newProfile = new Profile({
           name: profile.displayName,
           avatar: profile.photos[0].value
